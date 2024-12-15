@@ -18,7 +18,7 @@ func main() {
 
 	for i := 1; i <= 100; i++ {
 		wg.Add(1)
-		go func(n uint) {
+		func(n uint) {
 			defer wg.Done()
 			print(n)
 		}(uint(i))
