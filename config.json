@@ -1,0 +1,8 @@
+{
+    "active_chains": ["base-sepolia"],
+    "chain_configs": {
+        "base-sepolia": {
+            "Url": "https://base-sepolia.com"
+        }
+    }
+}

@@ -1,5 +1,10 @@
-# HelixGo
+# Go-Helix
 Implementation of backend services for HelixPay.
+
+## Features
+- Bundle UserOps and submit to multiple blockchains.
+- Search for all transactions related to a viewing key.
+- Private pay gas for operation.
 
 ## Services:
 1. Bundler: 
