@@ -5,9 +5,12 @@ linker_flags = '-s -X main.buildTime=${current_time} -X main.version=${git_descr
 dev-bundler:
 	go run ./main.go bundler
 
+prod-bundler:
+	GIN_MODE=release ./build/main bundler
+
 .PHONY: build
 build:
-	GIN_MODE=release go build -ldflags=${linker_flags} -o=./build/main ./main.go
+	go build -ldflags=${linker_flags} -o=./build/main ./main.go
 
 format:
 	go fmt ./

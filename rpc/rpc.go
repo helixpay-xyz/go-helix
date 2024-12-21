@@ -11,7 +11,7 @@ import (
 
 type Rpc struct {
 	client  *client.Client
-	methods map[string]func(data map[string]any) (string, error)
+	methods map[string]func(data []any) (string, error)
 }
 
 func jsonrpcError(c *gin.Context, code int, message string, data any, id any) {
@@ -30,9 +30,9 @@ func jsonrpcError(c *gin.Context, code int, message string, data any, id any) {
 func NewRpc(client *client.Client) *Rpc {
 	r := &Rpc{
 		client:  client,
-		methods: make(map[string]func(params map[string]any) (string, error)),
+		methods: make(map[string]func(params []any) (string, error)),
 	}
-	r.methods["eth_sendUserOperation"] = client.Eth_sendUserOperation // Register methods here
+	r.methods["eth_sendUserOperations"] = client.Eth_sendUserOperations // Register methods here
 	return r
 }
 
@@ -48,8 +48,12 @@ func (r *Rpc) handleRequest(c *gin.Context, data map[string]any) (id any, result
 		jsonrpcError(c, -32601, "Method not found", "The method does not exist / is not available", data["id"])
 		return data["id"], nil, false
 	}
+	params, ok := data["params"].([]any)
+	if !ok {
+		jsonrpcError(c, -32602, "Invalid params format", "Expected array of objects", data["id"])
+		return data["id"], nil, false
+	}
 
-	params, _ := data["params"].(map[string]any)
 	result, err := handler(params)
 	if err != nil {
 		jsonrpcError(c, -32603, "Internal error", err.Error(), data["id"])
