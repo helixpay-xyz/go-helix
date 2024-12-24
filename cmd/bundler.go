@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/helixpay-xyz/go-helix/client"
 	"github.com/helixpay-xyz/go-helix/config"
+	"github.com/helixpay-xyz/go-helix/mempool"
 	"github.com/helixpay-xyz/go-helix/rpc"
 	"github.com/spf13/cobra"
 )
@@ -36,7 +37,8 @@ var bundlerCmd = &cobra.Command{
 
 		for _, chain := range config.ActiveChains {
 			log.Print("Active chain: ", config.ChainConfigs[chain].Url)
-			client := client.NewClient(chain, config.ChainConfigs[chain].Url)
+			mempool := mempool.NewMempool()
+			client := client.NewClient(chain, config.ChainConfigs[chain].Url, mempool)
 			rpc := rpc.NewRpc(client)
 			r.POST("/"+chain, rpc.HandleRequest)
 		}

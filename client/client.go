@@ -5,18 +5,21 @@ import (
 	"errors"
 	"log"
 
+	"github.com/helixpay-xyz/go-helix/mempool"
 	"github.com/helixpay-xyz/go-helix/userop"
 )
 
 type Client struct {
-	chain  string
-	rpcUrl string
+	chain   string
+	rpcUrl  string
+	mempool *mempool.Mempool
 }
 
-func NewClient(chain string, rpcUrl string) *Client {
+func NewClient(chain string, rpcUrl string, mempool *mempool.Mempool) *Client {
 	return &Client{
-		chain:  chain,
-		rpcUrl: rpcUrl,
+		chain:   chain,
+		rpcUrl:  rpcUrl,
+		mempool: mempool,
 	}
 }
 
