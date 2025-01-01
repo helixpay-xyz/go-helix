@@ -24,7 +24,7 @@ func NewServer() *Server {
 
 func (s *Server) Run() {
 	go func() {
-		s.apiHandler.Run()
+		s.scanner.Run()
 	}()
 
 	quit := make(chan os.Signal, 1)

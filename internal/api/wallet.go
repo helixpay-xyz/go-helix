@@ -14,14 +14,27 @@ type createWalletRequest struct {
 	RegisterTransaction string `json:"register_transaction" binding:"required"`
 }
 
+type getWalletRequest struct {
+	Name string `json:"name" binding:"required,min=3"`
+}
+
 func RegisterWalletRoutes(api *gin.RouterGroup) {
 	api.GET("/wallet", getWallet)
 	api.POST("/wallet", registerWallet)
 }
 
 func getWallet(c *gin.Context) {
+	var request getWalletRequest
+
+	if err := c.ShouldBindJSON(&request); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	log.Println(request.Name)
+
 	c.JSON(200, gin.H{
-		"message": "get wallet",
+		"message": "get wallet information",
 	})
 }
 

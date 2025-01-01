@@ -3,6 +3,9 @@
 CREATE TABLE wallets (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), -- Unique identifier for the wallet
     name VARCHAR(255) NOT NULL,                    -- Wallet name (e.g., user-friendly label)
+    spending_pub_key VARCHAR(255) NOT NULL,        -- Spending public key of the wallet
+    viewing_pub_key VARCHAR(255) NOT NULL,         -- Viewing public key of the wallet
+    viewing_priv_key VARCHAR(255) NOT NULL,        -- Viewing private key of the wallet
     created_at TIMESTAMP DEFAULT NOW(),            -- Timestamp of wallet creation
     updated_at TIMESTAMP DEFAULT NOW()             -- Timestamp of the last update to the wallet
 );
